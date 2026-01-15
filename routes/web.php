@@ -2,6 +2,7 @@
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
 
 
@@ -24,5 +25,6 @@ Route::middleware('auth')->group(function () {
 Route::resource('products',ProductController::class);
 Route::resource('categorys',CategoryController::class);
 Route::resource('supplier',SupplierController::class);
+Route::resource('users',UserController::class);
 
 require __DIR__.'/auth.php';
