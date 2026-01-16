@@ -10,5 +10,19 @@ class Product extends Model
         'name',
         'price',
         'quantity',
+        'category_id',
+        'supplier_id',
     ];
+
+    public function category(){
+        return $this->belongsTo(Category::class);
+    }
+
+    public function supplier(){
+        return $this->belongsTo(Supplier::class);
+    }
+
+    public function items(){
+        return $this->hasMany(SaleItem::class);
+    }
 }

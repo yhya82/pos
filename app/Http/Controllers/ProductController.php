@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 use App\Models\Product;
+use App\Models\Category;
+use App\Models\Supplier;
 use Illuminate\Http\Request;
 
 
@@ -12,7 +14,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::all();
+        $products = Product::with(['categories','suppliers'])->get();
 
         return view('products.index', compact('products'));
     }
@@ -22,7 +24,9 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('products.create');
+        $categorys = Category::all();
+        $suppliers = Supplier::all();
+        return view('products.create', compact('categorys','suppliers'));
     }
 
     /**
@@ -34,6 +38,8 @@ class ProductController extends Controller
             'name'=> 'required',
             'price'=> 'required',
             'quantity'=>'required',
+            'category_id'=>'required:exists,categories,id',
+            'supplier_id'=>'required:exists,suppliers,id',
         ]);
 
         Product::create($request->all());
@@ -54,7 +60,9 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        return view('products.edit',compact('product'));
+        $categorys = Category::all();
+        $suppliers = Supplier::all();
+        return view('products.edit',compact('product','categorys','suppliers'));
     }
 
     /**
@@ -66,6 +74,8 @@ class ProductController extends Controller
             'name'=> 'required',
             'price'=> 'required',
             'quantity'=>'required',
+            'category_id'=>'required',
+            'supplier_id'=>'required',
         ]);
 
         $product->update($request->all());

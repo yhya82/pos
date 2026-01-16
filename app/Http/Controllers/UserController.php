@@ -32,7 +32,7 @@ class UserController extends Controller
             'name'=>'required',
             'email'=>'required',
             'password'=>'required',
-            'role'=>'required'
+            'role'=>'user',
         ]);
         User::create($request->all());
         return redirect()->route('users.index')->with('success', 'user created successfully');

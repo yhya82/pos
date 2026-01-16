@@ -15,6 +15,22 @@
         <input type="text" name="price" placeholder="Enter price"><br>
         <label>Quantity</label><br>
         <input type="text" name="quantity" placeholder="Enter quantity"><br>
+        <select name="category_id" >
+            <option value="">Select Category</option>
+                @foreach($categorys as $category)
+                <option value="{{$category->id}}">
+                    {{$category->name}}
+                </option>
+                @endforeach
+        </select><br>
+        <select name="supplier_id" >
+            <option value="">select supplier</option>
+             @foreach($suppliers as $supplier)
+             <option value="{{$supplier->id}}">
+                {{$supplier->name}}
+             </option>
+             @endforeach
+        </select><br>
         <button type="submit">Submit</button>
     </form>
 </body>
