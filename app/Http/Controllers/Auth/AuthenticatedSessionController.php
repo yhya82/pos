@@ -36,7 +36,7 @@ class AuthenticatedSessionController extends Controller
         }
 
 
-        return (route('/sales.pos'));
+        return ('/sale.pos');
     }
 
     /**

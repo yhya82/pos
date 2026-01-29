@@ -10,6 +10,7 @@ class Sale extends Model
         'user_id',
         'total',
         'status',
+        'payment_method',
     ];
 
     public function items(){

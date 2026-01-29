@@ -3,6 +3,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\SaleController;
 use App\Http\Controllers\ProfileController;
 
 
@@ -26,5 +27,11 @@ Route::resource('products',ProductController::class);
 Route::resource('categorys',CategoryController::class);
 Route::resource('supplier',SupplierController::class);
 Route::resource('users',UserController::class);
+
+Route::get('sale/pos',[SaleController::class,'pos'])->name('sale.pos');
+Route::get('sale/index',[SaleController::class,'index'])->name('sale.index');
+Route::post('sales/additem',[SaleController::class,'addItem'])->name('sales.additem');
+Route::post('sales/completesale',[SaleController::class, 'completeSale'])->name('sales.completesale');
+Route::delete('sales/removeitem/{saleItem}',[SaleController::class,'removeItem'])->name('sales.removeitem');
 
 require __DIR__.'/auth.php';
