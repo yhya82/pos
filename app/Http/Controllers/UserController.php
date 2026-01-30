@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -12,7 +13,7 @@ class UserController extends Controller
     public function index()
     {
         $users = User::all();
-        return view('user.index',compact('users'));
+        return view('user.index',compact('users' ));
     }
 
     /**
@@ -32,7 +33,7 @@ class UserController extends Controller
             'name'=>'required',
             'email'=>'required',
             'password'=>'required',
-            'role'=>'user',
+            'role'=>'required',
         ]);
         User::create($request->all());
         return redirect()->route('users.index')->with('success', 'user created successfully');
@@ -64,12 +65,20 @@ class UserController extends Controller
          $request->validate([
             'name'=>'required',
             'email'=>'required',
-            'password'=>'required',
+            'password'=>'nullable|min:8',
             'role'=>'required',
 
         ]);
 
-        $user->update($request->all());
+        //fill all except password buh if the user fills it hash the passowrd and save it 
+        $user->fill($request->except('password'));
+
+        if($request->filled('password')){
+            $user->password = Hash::make($request->password);
+        }
+
+        $user->save();
+
         return redirect()->route('users.index')->with('success', 'user updated successfully');
     }
 

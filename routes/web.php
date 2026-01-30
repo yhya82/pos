@@ -23,10 +23,13 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::middleware(['auth','role:admin'])->group(function () {
+    Route::resource('users',UserController::class);
+});
+
 Route::resource('products',ProductController::class);
 Route::resource('categorys',CategoryController::class);
 Route::resource('supplier',SupplierController::class);
-Route::resource('users',UserController::class);
 
 Route::get('sale/pos',[SaleController::class,'pos'])->name('sale.pos');
 Route::get('sale/index',[SaleController::class,'index'])->name('sale.index');

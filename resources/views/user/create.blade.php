@@ -8,6 +8,8 @@
 <body>
     <form action="{{route('users.store')}}" method="POST">
         @csrf
+        <h2>Create User</h2>
+        <a href="{{route('users.index')}}">View users</a>
         <label>Name</label><br>
         <input type="text" name="name" placeholder="Enter name"><br>
         <label>email</label><br>

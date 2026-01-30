@@ -32,11 +32,11 @@ class AuthenticatedSessionController extends Controller
 
         if($user->roles == 'admin'){
 
-            return ('/dashboard');
+            return redirect('/dashboard');
         }
 
 
-        return ('/sale.pos');
+        return redirect('/sale/pos');
     }
 
     /**

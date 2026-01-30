@@ -7,6 +7,7 @@
 </head>
 <body>
    <h2>Users</h2> 
+   <a href="{{route('users.create')}}">create user</a>
    <table>
     <tr>
         <th>ID</th>
