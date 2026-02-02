@@ -4,15 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body>
-    <section>
+    <section class="py-2 xl:py-10">
         <div class="grid grid-cols xl:grid-cols-2">
             <div>
                 <!-- nav bar for categories -->
                 
                 <!-- for cards -->
-                <h2>Pos system</h2>
+                <h2 class="text-4xl ">Pos system</h2>
                 <a href="{{route('sale.index')}}">View Sales History</a>
                 <form action="{{route('sales.additem')}}" method="POST">
                     @csrf

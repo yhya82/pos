@@ -1,0 +1,37 @@
+<?php
+
+namespace App\Http\Middleware;
+
+use Closure;
+use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\Auth;
+
+
+class RoleMiddleware
+{
+    /**
+     * Handle an incoming request.
+     *
+     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     */
+    public function handle(Request $request, Closure $next,$roles): Response
+    {
+       
+    if(!auth()->check()){
+            return redirect('/login');
+        }
+
+         // Split multiple roles (e.g., 'admin|manager')
+        $rolesArray = explode('|', $roles);
+
+        // Check if logged-in user's role is allowed
+        if (!in_array(auth()->user()->role, $rolesArray)) {
+            return redirect( '/login'); // or redirect somewhere else
+        }
+    
+    
+    return $next($request);
+    }
+}
+
