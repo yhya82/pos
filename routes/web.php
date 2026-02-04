@@ -21,13 +21,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
 
-Route::middleware(['auth','role:admin'])->group(function () {
-    Route::resource('users',UserController::class);
-});
-
-Route::resource('products',ProductController::class);
+    Route::resource('products',ProductController::class);
 Route::resource('categorys',CategoryController::class);
 Route::resource('supplier',SupplierController::class);
 
@@ -36,5 +31,12 @@ Route::get('sale/index',[SaleController::class,'index'])->name('sale.index');
 Route::post('sales/additem',[SaleController::class,'addItem'])->name('sales.additem');
 Route::post('sales/completesale',[SaleController::class, 'completeSale'])->name('sales.completesale');
 Route::delete('sales/removeitem/{saleItem}',[SaleController::class,'removeItem'])->name('sales.removeitem');
+
+});
+
+Route::middleware(['auth','role:admin'])->group(function () {
+    Route::resource('users',UserController::class);
+});
+
 
 require __DIR__.'/auth.php';

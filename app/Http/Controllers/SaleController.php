@@ -6,6 +6,7 @@ use App\Services\SalesService;
 use App\Models\Product;
 use App\Models\SaleItem;
 use App\Models\Sale;
+use App\Models\Category;
 use Illuminate\Support\Facades\DB;
 
 use Illuminate\Http\Request;
@@ -46,13 +47,22 @@ class SaleController extends Controller
         }
     }
     // function to show the pos page with the products and pasing the sale id to the blade
-    public function pos()
+    public function pos(Request $request)
     {
-        $products = Product::all();
+        
+        $categorys = Category::all();
+
+        $products = Product::when($request->category, function ($query) use ($request) {
+        $query->where('category_id', $request->category);
+         })->when($request->search, function ($query) use ($request){
+            $query->where('name','like','%'.$request->search.'%');
+         })->get();
+         
+
 
         $sale = $this->saleService->getOrCreateSale(auth()->id());
         
-        return view('sale.pos',compact('products','sale'));
+        return view('sale.pos',compact('products','sale','categorys'));
     }
 
     // function to complete sale
@@ -109,7 +119,8 @@ class SaleController extends Controller
         if($user->role === 'admin'){
 
         $sales = Sale::with(['items','user'])->orderby('createad_at','desc')->get();
-        }else {
+        }else
+         {
              $sales = Sale::with(['items'])->where('user_id',$user->id)->orderby('createad_at','desc')->get();
         }
         
