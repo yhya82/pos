@@ -26,6 +26,7 @@ class ProductController extends Controller
     {
         $categorys = Category::all();
         $suppliers = Supplier::all();
+        
         return view('products.create', compact('categorys','suppliers'));
     }
 
@@ -62,6 +63,7 @@ class ProductController extends Controller
     {
         $categorys = Category::all();
         $suppliers = Supplier::all();
+
         return view('products.edit',compact('product','categorys','suppliers'));
     }
 

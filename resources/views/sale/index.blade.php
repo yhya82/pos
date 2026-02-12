@@ -17,6 +17,7 @@
             <th>Payment Method</th>
             <th>Items</th>
             <th>Created at</th>
+            <th>Action</th>
 
         </tr>
         @forelse ($sales as $sale)
@@ -34,6 +35,7 @@
                 </ul>
             </td>
             <td>{{$sale->created_at->format('d M Y H:i')}}</td>
+            <td><a href="{{route('sale.edit',$sale)}}">Edit</a></td>
         </tr>
             
         @empty

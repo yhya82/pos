@@ -53,10 +53,10 @@ class SaleController extends Controller
         $categorys = Category::all();
 
         $products = Product::when($request->category, function ($query) use ($request) {
-        $query->where('category_id', $request->category);
-         })->when($request->search, function ($query) use ($request){
-            $query->where('name','like','%'.$request->search.'%');
-         })->get();
+            $query->where('category_id', $request->category);
+             })->when($request->search, function ($query) use ($request){
+                $query->where('name','like','%'.$request->search.'%');
+             })->get();
          
 
 
@@ -128,4 +128,21 @@ class SaleController extends Controller
 
     }
 
+    // function to get the sales history edit page
+    public function edit(Sale $sale){
+
+    return view('sale.edit',compact('sale'));
+    }
+
+    // function for the sale history update logic
+    public function update(Request $request, Sale $sale){
+
+        $sale->update([
+            'payment_method'=>$request->payment_method,
+            'status'=>$request->status,
+        ]);
+
+        return redirect()->with('success','sale updated');
+
+    }
 }
