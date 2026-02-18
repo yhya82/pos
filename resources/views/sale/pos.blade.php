@@ -14,58 +14,29 @@
         <div class="grid grid-cols xl:grid-cols-3 ">
 
             <div class=" bg-gray-100 col-span-2 py-2 xl:py-10" >
-                <h2 class="text-3xl xl:text-7xl text-center  font-bold ">PayPoint</h2>
-
-                <div class="flex justify-end mx-2 xl:mx-16 xl:mt-10  gap-10"><!-- nav bar for categories -->
-                    <div class="mx-2 xl:mx-6"><!--search button -->
-                        <form action="{{route('sale.pos')}}" method="GET" >
-                            <input class="w-80 p-5 rounded-2xl" type="text" name="search" value="{{request('search')}}" placeholder="Search Products">
-
-                            @if(request('category'))
-                            <input type="hidden" name="category" value="{{request('category')}}">
-                            @endif
-
-                            <button class="bg-blue-700 text-sm xl:text-2xl text-gray-200 rounded-xl p-4"  type="submit" style="display:inline">Search</button>
-                        </form>
-                       </div>
-
-                    <div><!--category -->
-                    <a href="{{route('sale.pos')}}" class="text-base xl:text-3xl text-white bg-blue-700 p-4 xl:p-4 rounded-2xl font-semibold hover:bg-blue-400">All</a>
-                     @foreach ($categorys as $category)
-                    <a href="{{route('sale.pos',['category' => $category->id])}}"  class="{{request('category')== $category->id}} text-base xl:text-3xl text-white bg-blue-700 p-4 xl:p-4 rounded-2xl font-semibold  hover:bg-blue-400"> {{$category->name}}</a>
-                       @endforeach
-                       </div>
-                       
-                </div>
-
-
-                <div class="grid grid-cols-2 1g:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-6 gap-5 mx-2 xl:mx-6 mt-2 xl:mt-8"><!-- for cards -->
-                    @foreach ($products as $product)
-                    <div class="shadow-lg rounded-2xl p-4 flex flex-col justify-between bg-white" > 
-                   
-                    <p class="text-base xl:text-3xl text-center font-semibold">{{$product->name}}</p>
-                    <p class="text-base xl:text-2xl text-center font-semibold mt-1 xl:mt-2" >  D{{ number_format($product->price,2)}}</p>
-                    
-                    <form action="{{route('sales.additem')}}" method="POST" class="">
-                    @csrf
-                    
-                    <input type="hidden" name="sale_id" value="{{$sale->id}}">
-                    <input type="hidden" name="product_id" value="{{$product->id}}">
-                    
-                    <input type="hidden" name="quantity" value="1" min="1">
-                    <button class="bg-green-700 text-sm xl:text-xl mx-2 xl:mx-8 p-2 rounded-xl text-white font-semibold mt-2 xl:mt-4 hover:bg-green-500" type="submit">Add item</button>
-                    </form>
-                </div>
                 
-                 @endforeach
-                </div>
+
+                <div class="flex justify-end px-2 xl:px-10 gap-2 xl:gap-4">
+              <input class="w-80 p-5 rounded-2xl" type="text" id="search" value="{{request('search')}}" placeholder="Search Products">
+
+                <select  id="category">
+                    <option value="">All</option>
+                    @foreach($categorys as $category)
+                    <option value="{{$category->id}}">{{$category->name}}</option>
+                    @endforeach
+                   </select>
+                   </div>    
+                
+                <!-- for cards -->
+                    <div id="product-container" class="grid grid-cols-2 xl:grid-cols-4 gap-2 l:gap-4 px-2 xl:px-4 py-2 xl:py-8" ></div>
+                 
             </div>
 
-            <div class="bg-gray-200 h-screen px-10 w-full py-2 xl:py-10"><!-- cart -->
-                
-                <h2 class="text-3xl xl:text-5xl text-center mt-2 xl:mb-5 font-bold ">Current Sale</h2>
-                 <a href="{{route('sale.index')}}" class="text-base xl:text-3xl italic hover:text-blue-300">View Sales History</a>
-                <table class="border border-gray w-full cellpadding='5' mt-2 xl:mt-6">
+            <div class="bg-gray-200 h-[100vh] py-2 xl:py-20 w-full px-2 xl:px-4"><!-- cart -->
+                <h2 class="text-3xl xl:text-7xl text-center  font-bold py-2 xl:py-10 ">PayPoint</h2>
+                <h2 class="text-3xl xl:text-5xl text-center mt-2 xl:mt-12 xl:mb-5 font-bold italic">Current Sale</h2>
+                 <a href="{{route('sale.index')}}" class="text-base xl:text-3xl font-bold text-blue-800  hover:text-blue-300">View Sales History</a>
+                <table class="border border-black w-full mt-2 xl:mt-6">
                     <thead class="bg-gray-400 text-base xl:text-3xl p-1 xl:p-5">
                     <tr>
                         <th>Product</th>
@@ -75,24 +46,11 @@
                         <th>Action</th>
                     </tr>
                     </thead>
-                    @foreach($sale->items as $item)
-                     <tbody class="odd:bg-white even:bg-gray-200 text-center text-sm xl:text-2xl">
-                    <tr>
-                       
-                        <td>{{$item->product->name}}</td>
-                        <td>{{number_format($item->product->price,2)}}</td>
-                        <td>{{$item->quantity}}</td>
-                        <td>{{number_format($item->subtotal,2)}}</td>
-                        <td>
-                            <form action="{{route('sales.removeitem', $item->id)}}" method="POST" style="display:inline">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="text-red-600 font-semibold hover:text-red-300">Remove</button>
-                            </form>
-                        </td>
-                    </tr>
+                    
+                     <tbody id="sales-table" class="odd:bg-white even:bg-gray-300 text-center text-sm xl:text-2xl">
+                   
                     </tbody>
-                    @endforeach
+                    
                 </table>
                 <form action="{{route('sales.completesale')}}" method="POST">
                     @csrf
@@ -108,5 +66,148 @@
             </div>
         </div>
     </section>
+    <script>
+        const csrftoken = '{{csrf_token()}}';
+
+        document.addEventListener('DOMContentLoaded', function(){
+
+     const SearchInput = document.getElementById('search');
+    const categorySelect = document.getElementById('category');
+    const container = document.getElementById('product-container');
+
+    function loadProducts(){
+
+        const search = SearchInput.value;
+        const category = categorySelect.value;
+
+        fetch(`/api/sale/pos?search=${search}&category=${category}`)
+        .then(res => res.json())
+        .then(data => {
+
+            const products = data.products;
+            container.innerHTML = "";
+
+            if(products.length === 0){
+                container.innerHTML = "<p>No product found</p>";
+                return;
+            }
+
+            products.forEach(product => {
+
+                const card = document.createElement('div');
+                card.classList.add("bg-white","p-4","rounded-xl","shadow");
+
+                card.innerHTML = `
+                    <p class="font-bold text-sm xl:text-3xl">${product.name}</p>
+                    <p class="text-sm xl:text-xl">D${product.price}</p>
+                    <button onclick="addtoCart(${product.id})"
+                        class="bg-blue-500 text-white px-3 py-1 rounded mt-2">
+                        Add to Cart
+                    </button>
+                `;
+
+                container.appendChild(card);
+            });
+        });
+    }
+
+    loadProducts();
+    loadSales();
+
+    SearchInput.addEventListener('keyup', loadProducts);
+    categorySelect.addEventListener('change', loadProducts);
+});
+
+
+function addtoCart(productId){
+
+    fetch(`/api/sale/add-item`, {
+        method: "POST",
+        headers: {
+            'Content-Type':'application/json',
+            'X-CSRF-TOKEN': csrftoken,
+            credentials:'same-origin'
+        },
+        body: JSON.stringify({
+            product_id: productId,
+            quantity: 1
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+        console.log(data);
+        
+
+        loadSales();
+    });
+}
+
+
+    //fetching items belonging sales
+        async function loadSales(){
+            
+            try{
+                const response = await fetch(`/api/sale/pos`);
+                const results = await response.json();
+               
+                const sale = results.sale;
+                
+                const items = sale.items;
+
+                    
+                const tbody = document.getElementById('sales-table');
+                tbody.innerHTML="";
+
+                
+
+                items.forEach(item =>{
+                    const tr = document.createElement('tr');
+                    tr.innerHTML=`
+                         <td class="border border-black">${item.product.name}</td>
+                        <td class="border border-black">${item.product.price}</td>
+                        <td class="border border-black">${item.quantity}</td>
+                        <td class="border border-black">${item.subtotal}</td>
+                        <td class="border border-black">
+                             
+                            <button onclick="deleteSale(${item.id})" class="text-red-700 font-bold" >Remove</button>
+                         </td> `;
+                           
+                         
+                    
+                    tbody.appendChild(tr);
+
+                });
+                
+
+            }catch(error){
+                console.log('Error loading Sales',error);
+            }
+
+            
+        }
+
+        function deleteSale(id){
+               if(!confirm("Remove this item")) return;
+
+               fetch(`/api/sale/removeItem/${id}`,{
+                     method:'DELETE',
+                     headers:{'Accept':'application/json',
+                            'X-CSRF-TOKEN': csrftoken }
+               })
+               .then(res => res.json())
+               .then( data =>{
+                alert(data.message)
+
+                loadSales();
+
+               })
+               .catch(error =>{
+                    console.error('Error:',error);
+                    alert('Delete failed')
+                });
+
+            }
+
+    </script>
 </body>
 </html>

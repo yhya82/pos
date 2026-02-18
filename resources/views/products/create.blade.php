@@ -37,6 +37,7 @@
     </form>
 
     <script>
+
         document.getElementById('product-form').addEventListener('submit', async function(e){
             e.preventDefault();
 
@@ -50,6 +51,7 @@
                                 'Accept':'application/json',
                                 'X-CSRF-TOKEN': '{{ csrf_token()}}'
                     },
+                    credentials: 'same-origin',
                     body:JSON.stringify(data)
                 });
 

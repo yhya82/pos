@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 
 class SalesService
 {
-    public function getOrCreateSale(int $userId):Sale
+    public function getOrCreateSale(int $userId ):Sale
     {
         return $sale = Sale::firstOrCreate(
                 ['user_id' => $userId, 'status' => 'pending'],

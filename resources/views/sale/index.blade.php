@@ -35,7 +35,14 @@
                 </ul>
             </td>
             <td>{{$sale->created_at->format('d M Y H:i')}}</td>
-            <td><a href="{{route('sale.edit',$sale)}}">Edit</a></td>
+            <td>
+                <a href="{{route('sale.edit',$sale)}}">Edit</a>
+                <form action="{{route('sale.destroy',$sale)}}" method="POST" style="display:inline">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit">Delete</button>
+                </form>
+            </td>
         </tr>
             
         @empty

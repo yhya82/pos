@@ -60,6 +60,7 @@
         e.preventDefault();
 
         const id = document.getElementById('product_id').value;
+
         fetch(`/api/products/${id}`,{
             method:'PUT',
             headers:{'Accept':'application/json',

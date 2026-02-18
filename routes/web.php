@@ -30,6 +30,7 @@ Route::get('sale/index',[SaleController::class,'index'])->name('sale.index');
 Route::post('sales/additem',[SaleController::class,'addItem'])->name('sales.additem');
 Route::post('sales/completesale',[SaleController::class, 'completeSale'])->name('sales.completesale');
 Route::delete('sales/removeitem/{saleItem}',[SaleController::class,'removeItem'])->name('sales.removeitem');
+Route::delete('sale/{sale}',[SaleController::class,'destroy'])->name('sale.destroy');
 //only admins return to the middleware after testing
  Route::get('sale/edit',[SaleController::class,'edit'])->name('sale.edit');
     Route::post('sale/{sale}/edit',[SaleController::class,'update'])->name('sale.update');

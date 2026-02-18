@@ -145,4 +145,10 @@ class SaleController extends Controller
         return redirect()->with('success','sale updated');
 
     }
+
+    public function destroy(Sale $sale){
+        $sale->delete();
+
+        return redirect()->route('sale.index');
+    }
 }
