@@ -5,6 +5,8 @@ namespace App\Services;
 use App\Models\Sale;
 use App\Models\SaleItem;
 use App\Models\Product;
+use App\Events\SaleCreated;
+
 use Illuminate\Support\Facades\DB;
 
 class SalesService
@@ -49,6 +51,9 @@ class SalesService
             $sale->total = $sale->items()->sum('subtotal');
             
             $sale->save();
+
+            // fire event here
+            event(new SaleCreated($sale));
 
             return $saleItem;
         });

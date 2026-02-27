@@ -147,6 +147,7 @@ class SaleController extends Controller
     }
 
     public function destroy(Sale $sale){
+        
         $sale->delete();
 
         return redirect()->route('sale.index');

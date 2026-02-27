@@ -1,12 +1,12 @@
 <?php
-
+use App\Http\Controllers\Api\DashboardController;
 use App\Http\Controllers\Api\SaleController;
 use App\Http\Controllers\Api\ProductController;
 use Illuminate\Support\Facades\Route;
 
 
 
-Route::middleware(['web','auth:sanctum'])->group(function() {
+Route::middleware(['auth:sanctum'])->group(function() {
 
 Route::get('products',[ProductController::class,'index']);
 Route::get('products/{product}',[ProductController::class,'show']);
@@ -14,6 +14,7 @@ Route::post('products',[ProductController::class,'store']);
 Route::put('products/{product}',[ProductController::class,'update']);
 Route::delete('products/{product}',[ProductController::class,'destroy']);
 
+Route::get('/dashboard',[DashboardController::class,'index']);
 
 Route::get('sale/pos',[SaleController::class,'pos']);
 Route::get('sale/index',[SaleController::class,'index']);

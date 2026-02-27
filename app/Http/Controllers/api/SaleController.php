@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\DB;
 use App\Services\SalesService;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Events\SaleItemRemoved;
+use App\Events\SaleCompleted;
 
 class SaleController extends Controller
 {
@@ -26,7 +28,7 @@ class SaleController extends Controller
         ]);
         try{
                 $saleItem = $this->saleService->addItem(
-                auth()->id() ?? 1,
+                auth()->id(),
                 $validated['product_id'],
                 $validated['quantity']
 
@@ -79,6 +81,9 @@ class SaleController extends Controller
                 $validated['payment_method']
             );
 
+            //fire the event here
+            event(new SaleCompleted($sale));
+
             return response()->json([
                 'message'=>'sale completed',
                 'data'=> $sale
@@ -107,6 +112,9 @@ class SaleController extends Controller
 
            //update total
            $sale->decrement('total',$saleItem->price * $saleItem->quantity);
+
+           // fire the event here
+           event(new SaleItemRemoved($sale,$saleItem));
 
            // delete the items
            $saleItem->delete();

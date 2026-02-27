@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{csrf_token()}}">
     <title>Document</title>
     
      @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -28,7 +29,7 @@
                    </div>    
                 
                 <!-- for cards -->
-                    <div id="product-container" class="grid grid-cols-2 xl:grid-cols-4 gap-2 l:gap-4 px-2 xl:px-4 py-2 xl:py-8" ></div>
+                    <div id="product-container" class="grid grid-cols-2 xl:grid-cols-4 2xl:grid-cols-5 gap-2 l:gap-4 px-2 xl:px-4 py-2 xl:py-8" ></div>
                  
             </div>
 
@@ -63,14 +64,20 @@
                     </select>
                     <button type ="submit" class="text-sm xl:text-xl p-2 xl:p-4 bg-green-700 text-white rounded-xl w-1/4 mx-2 xl:mx-8 hover:bg-green-400">Complete Sale</button>
                 </form>
+                 <form action="{{route('logout')}}" method="POST">
+                         @csrf
+                     <button type="submit" class="text-base xl:text-3xl text-white bg-red-700 rounded-2xl mt-1 xl:mt-64 p-2 xl:p-6 hover:text-black hover:bg-red-400">Logout</button>
+                </form>
             </div>
         </div>
     </section>
     <script>
-        const csrftoken = '{{csrf_token()}}';
+       
+     
+       
+    document.addEventListener ('DOMContentLoaded', async function(){
 
-        document.addEventListener('DOMContentLoaded', function(){
-
+    await fetch ('/sanctum/csrf-cookie', { credentials: 'include' });
      const SearchInput = document.getElementById('search');
     const categorySelect = document.getElementById('category');
     const container = document.getElementById('product-container');
@@ -80,7 +87,10 @@
         const search = SearchInput.value;
         const category = categorySelect.value;
 
-        fetch(`/api/sale/pos?search=${search}&category=${category}`)
+        fetch(`/api/sale/pos?search=${search}&category=${category}`,{
+            credentials:'include'
+        })
+
         .then(res => res.json())
         .then(data => {
 
@@ -101,7 +111,7 @@
                     <p class="font-bold text-sm xl:text-3xl">${product.name}</p>
                     <p class="text-sm xl:text-xl">D${product.price}</p>
                     <button onclick="addtoCart(${product.id})"
-                        class="bg-blue-500 text-white px-3 py-1 rounded mt-2">
+                        class="bg-blue-500 text-white px-3 py-1 rounded mt-2 hover:bg-blue-200 cursor-pointer">
                         Add to Cart
                     </button>
                 `;
@@ -118,28 +128,33 @@
     categorySelect.addEventListener('change', loadProducts);
 });
 
-
-function addtoCart(productId){
-
-    fetch(`/api/sale/add-item`, {
+        //add products in the cart
+       async function addtoCart(productId){
+        
+       const res = await fetch(`/api/sale/add-item`, {
         method: "POST",
-        headers: {
-            'Content-Type':'application/json',
-            'X-CSRF-TOKEN': csrftoken,
-            credentials:'same-origin'
+        headers: {'Content-Type':'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
         },
+
+        credentials:'include',
         body: JSON.stringify({
             product_id: productId,
             quantity: 1
         })
     })
-    .then(res => res.json())
-    .then(data => {
+
+      if (!res.ok) {
+        console.error("Error:", res.status, await res.text());
+        return;
+    }
+    const data = await res.json();
+    
         console.log(data);
         
 
         loadSales();
-    });
+    
 }
 
 
@@ -147,7 +162,9 @@ function addtoCart(productId){
         async function loadSales(){
             
             try{
-                const response = await fetch(`/api/sale/pos`);
+                const response = await fetch(`/api/sale/pos`,{
+                    credentials: 'include'
+                });
                 const results = await response.json();
                
                 const sale = results.sale;
@@ -186,13 +203,17 @@ function addtoCart(productId){
             
         }
 
-        function deleteSale(id){
+        //function to remove item in a sale
+       async function deleteSale(id){
                if(!confirm("Remove this item")) return;
+                    
 
                fetch(`/api/sale/removeItem/${id}`,{
                      method:'DELETE',
                      headers:{'Accept':'application/json',
-                            'X-CSRF-TOKEN': csrftoken }
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                     },
+                     credentials: 'include',
                })
                .then(res => res.json())
                .then( data =>{
@@ -207,7 +228,7 @@ function addtoCart(productId){
                 });
 
             }
-
+        
     </script>
 </body>
 </html>
