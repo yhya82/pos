@@ -10,6 +10,7 @@
 
 </head>
 <body>
+    
     <section class="h-screen xl:h-[100vh] bg-gray-100 ">
          
         <div class="grid grid-cols xl:grid-cols-3 ">

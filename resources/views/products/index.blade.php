@@ -6,9 +6,14 @@
     <title>Document</title>
 </head>
 <body>
-    <h2>Product List</h2>
-    <a href="{{route('products.create')}}">Create new product</a>
-    <table>
+    @extends('layouts.app')
+    @section('content')
+    <div class="max-w-6xl xl:max-w-7xl mx-auto px-4 mt-10 xl:mt-32">
+        <div class="overflow-x-auto ">
+    <h2 class="text-xl xl:text-5xl 2xl:text-6xl font-bold">Product List</h2>
+    <a href="{{route('products.create')}}" class="text-base xl:text-xl 2xl:text-2xl mt-2 xl:mt-6 text-blue-800 font-semibold hover:text-blue-300">Create new product</a>
+    <table class="min-w-full text-sm text-left border mt-4 xl:mt-6">
+        <thead class="text-xl xl:text-4xl 2xl:text-6xl bg-gray-400 uppercase p-3 xl:p-5 space-x-10">
         <tr>
             <th>ID</th>
             <th>Name</th>
@@ -18,10 +23,13 @@
             <th>Supplier</th>
             <th>Actions</th>
         </tr>
-        <tbody id="table-body">
+        </thead>
+        <tbody id="table-body" class="text-center text-base xl:text-2xl 2xl:text-3xl">
 
         </tbody>
-      
+        </div>
+    </div>
+      @endsection
     </table>
     <script>
         const csrfToken = '{{ csrf_token() }}';
@@ -45,8 +53,8 @@
                          <td>${product.category ? product.category.name : 'N/A'}</td>
                         <td>${product.supplier ? product.supplier.name : 'N/A'}</td>
                         <td>  
-                            <a href="/products/${product.id}/edit">Edit</a>
-                        <button onclick="deleteProduct(${product.id})">Delete</button>
+                            <a class="text-blue-800 hover:text-blue-400" href="/products/${product.id}/edit">Edit</a>
+                        <button class="text-red-800 hover:text-red-300" onclick="deleteProduct(${product.id})">Delete</button>
                         
                              </td> `;
 

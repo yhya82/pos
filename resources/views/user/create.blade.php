@@ -6,9 +6,11 @@
     <title>Document</title>
 </head>
 <body>
+    @extends('layouts.app')
+    @section('content')
     <form action="{{route('users.store')}}" method="POST">
         @csrf
-        <h2 class="text-6xl text-center">Create User</h2><br>
+        <h2 class=" text-2xl xl:text-5xl text-center">Create User</h2><br>
         <a href="{{route('users.index')}}">View users</a><br>
         <label>Name</label><br>
         <input type="text" name="name" placeholder="Enter name"><br>
@@ -23,5 +25,6 @@
         </select>
         <button type="submit">Add User</button>
     </form>
+    @endsection
 </body>
 </html>

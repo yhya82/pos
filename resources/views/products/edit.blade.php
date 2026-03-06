@@ -6,17 +6,28 @@
     <title>Document</title>
 </head>
 <body>
-     <form id ="edit-form">
+    @extends('layouts.app')
+    @section('content')
+      <h2 class="text-1g xl:text-6xl text-center font-bold mt-6 xl:mt-10">update form <h2>
+     <form id ="edit-form" class="max-w-6xl mx-auto mt-24 space-y-2">
         @csrf
-        <h2>update form <h2>
+      <div  class="grid grid-cols-1 xl:grid-cols-2 gap-5">
+        <div>
         <input type="hidden" id='product_id'>
-        <label>Name</label><br>
-        <input type="text" id="name" ><br>
-        <label>Price</label><br>
-        <input type="text" id="price" ><br>
-        <label>Quantity</label><br>
-        <input type="text" id='quantity'><br>
-        <select name="category_id" >
+        <label class="text-1g md:text-4xl">Name</label><br>
+        <input type="text" id="name" class="w-full xl:h-16" ><br>
+        </div>
+        <div> 
+        <label class="text-1g md:text-4xl">Price</label><br>
+         <input type="text" id="price"  class="w-full xl:h-16"><br>
+        </div>
+        </div>
+       
+        <label class="text-1g md:text-4xl">Quantity</label><br>
+        <input type="text" id='quantity' class="w-full xl:h-16"><br>
+        <div class="grid grid-cols-1 xl:grid-cols-2 gap-5">
+            <div>
+        <select name="category_id" class="w-full xl:h-16">
             <option value="">Select Category</option>
             @foreach($categorys as $category)
             <option value="{{$category->id}}">
@@ -24,14 +35,21 @@
             </option>
             @endforeach
         </select><br>
-        <select name="supplier_id" >
+        </div>
+        <div>
+        <select name="supplier_id" class="w-full xl:h-16">
             <option value="">Select Supplier</option>
             @foreach($suppliers as $supplier)
             <option value="{{$supplier->id}}">{{$supplier->name}}</option>
             @endforeach
         </select><br>
-        <button type="submit">Update Product</button>
+        </div>
+    </div>
+    <div class="flex justify-center xl:justify-start">
+        <button type="submit" class="bg-blue-800 p-3 xl:p-6 rounded-full text-1g md:text-2xl xl:text-4xl text-white font-bold mt-6 xl:mt-10 hover:bg-blue-500">Update Product</button>
+    </div>
     </form>
+    @endsection
 </body>
 <script>
     //loading the product into form
