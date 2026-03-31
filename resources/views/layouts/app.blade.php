@@ -71,7 +71,7 @@
     
 
 
-    <div class="overflow-y-auto flex-1   h-screen bg-gray-200 px-4 lg:px-8">
+    <div class="overflow-y-auto flex-1   h-screen bg-gray-200 px-4 lg:px-16">
         @yield('content')
         
         @yield('script')

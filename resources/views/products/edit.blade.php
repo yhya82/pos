@@ -1,56 +1,56 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
+
     @extends('layouts.app')
+
     @section('content')
-      <h2 class="text-1g xl:text-6xl text-center font-bold mt-6 xl:mt-10">update form <h2>
-     <form id ="edit-form" class="max-w-6xl mx-auto mt-24 space-y-2">
+    <div class="flex flex-col mt-16 px-4 lg:px-16">
+        <h2 class="text-4xl lg:text-6xl font-bold ">Update form <h2>
+    </div>
+
+      
+     <form id ="edit-form" class="px-4 lg:px-16  mt-10 lg:mt-16">
         @csrf
-      <div  class="grid grid-cols-1 xl:grid-cols-2 gap-5">
-        <div>
-        <input type="hidden" id='product_id'>
-        <label class="text-1g md:text-4xl">Name</label><br>
-        <input type="text" id="name" class="w-full xl:h-16" ><br>
-        </div>
-        <div> 
-        <label class="text-1g md:text-4xl">Price</label><br>
-         <input type="text" id="price"  class="w-full xl:h-16"><br>
-        </div>
-        </div>
-       
-        <label class="text-1g md:text-4xl">Quantity</label><br>
-        <input type="text" id='quantity' class="w-full xl:h-16"><br>
-        <div class="grid grid-cols-1 xl:grid-cols-2 gap-5">
-            <div>
-        <select name="category_id" class="w-full xl:h-16">
-            <option value="">Select Category</option>
-            @foreach($categorys as $category)
-            <option value="{{$category->id}}">
-                {{$category->name}}
-            </option>
-            @endforeach
-        </select><br>
-        </div>
-        <div>
-        <select name="supplier_id" class="w-full xl:h-16">
-            <option value="">Select Supplier</option>
-            @foreach($suppliers as $supplier)
-            <option value="{{$supplier->id}}">{{$supplier->name}}</option>
-            @endforeach
-        </select><br>
-        </div>
+      <div  class="flex flex-col  gap-2 lg:gap-5">
+            <div class="flex flex-col">
+                <input type="hidden" id='product_id'>
+                <label class="text-2xl lg:text-4xl">Name</label><br>
+                 <input type="text" id="name" class="w-1/2 lg:w-1/4 xl:h-16">
+            </div>
+            <div class="flex flex-col"> 
+                <label class="text-2xl lg:text-4xl">Price</label>
+                <input type="text" id="price"  class="w-1/2 lg:w-1/4 xl:h-16">
+            </div>
+        
+            <div class="flex flex-col">
+                <label class="text-2xl lg:text-4xl">Quantity</label><br>
+                <input type="text" id='quantity' class="w-1/2 lg:w-1/4 xl:h-16">
+            </div>
+             <div class="flex flex-col">
+                 <label class="text-2xl lg:text-4xl">Category</label><br>
+                    <select name="category_id" class="w-1/2 lg:w-1/4 xl:h-16">
+                        <option value="">Select Category</option>
+                        @foreach($categorys as $category)
+                         <option value="{{$category->id}}">
+                            {{$category->name}}
+                        </option>
+                         @endforeach
+                    </select>
+            </div>
+            <div class="flex flex-col">
+                <label class="text-2xl lg:text-4xl">Supplier</label>
+                <select name="supplier_id" class="w-1/2 lg:w-1/4 xl:h-16 ">
+                <option value="">Select Supplier</option>
+                @foreach($suppliers as $supplier)
+                 <option value="{{$supplier->id}}">{{$supplier->name}}</option>
+                 @endforeach
+                </select>
+             </div>
     </div>
     <div class="flex justify-center xl:justify-start">
-        <button type="submit" class="bg-blue-800 p-3 xl:p-6 rounded-full text-1g md:text-2xl xl:text-4xl text-white font-bold mt-6 xl:mt-10 hover:bg-blue-500">Update Product</button>
+        <button type="submit" class="bg-blue-800 p-3 xl:p-6 rounded-2xl text-2xl lg:text-4xl  text-white font-bold mt-4 xl:mt-6 hover:bg-blue-500">Update Product</button>
     </div>
     </form>
     @endsection
-</body>
+@section('script')
 <script>
     //loading the product into form
     document.addEventListener('DOMContentLoaded', function(){
@@ -112,4 +112,4 @@
             });
     });
 </script>
-</html>
+@endsection

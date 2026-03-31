@@ -8,23 +8,23 @@
 <body>
     @extends('layouts.app')
     @section('content')
-    <div class="max-w-6xl xl:max-w-7xl mx-auto px-4 mt-10 xl:mt-32">
+    <div class="px-4 lg:px-16 mt-16">
         <div class="overflow-x-auto ">
-    <h2 class="text-xl xl:text-5xl 2xl:text-6xl font-bold">Product List</h2>
-    <a href="{{route('products.create')}}" class="text-base xl:text-xl 2xl:text-2xl mt-2 xl:mt-6 text-blue-800 font-semibold hover:text-blue-300">Create new product</a>
-    <table class="min-w-full text-sm text-left border mt-4 xl:mt-6">
-        <thead class="text-xl xl:text-4xl 2xl:text-6xl bg-gray-400 uppercase p-3 xl:p-5 space-x-10">
+    <h2 class="text-4xl lg:text-6xl font-bold">Product List</h2>
+    <a href="{{route('products.create')}}" class="text-base lg:text-xl  mt-2 xl:mt-6 text-blue-800 font-semibold hover:text-blue-300">Create new product</a>
+    <table class="min-w-max border border-gray-700 text-sm text-left mt-4 xl:mt-6">
+        <thead class="text-2xl lg:text-4xl bg-gray-400 uppercase p-3 xl:p-5 gap-2 lg:gap-5 border border-gray-700 ">
         <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Price</th>
-            <th>quantity </th>
-            <th>Category</th>
-            <th>Supplier</th>
-            <th>Actions</th>
+            <th class="p-2 lg:p-4">ID</th>
+            <th class="p-2 lg:p-4">Name</th>
+            <th class="p-2 lg:p-4">Price</th>
+            <th class="p-2 lg:p-4">quantity </th>
+            <th class="p-2 lg:p-4">Category</th>
+            <th class="p-2 lg:p-4">Supplier</th>
+            <th class="p-2 lg:p-4">Actions</th>
         </tr>
         </thead>
-        <tbody id="table-body" class="text-center text-base xl:text-2xl 2xl:text-3xl">
+        <tbody id="table-body" class="text-center text-xl lg:text-2xl border border-gray-500 ">
 
         </tbody>
         </div>
