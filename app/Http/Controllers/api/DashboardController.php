@@ -12,14 +12,16 @@ class DashboardController extends Controller
 {
     public function index(){
 
+    
     return response()->json([
         'totalsales' => Sale::sum('total'),
         'todaysales' => Sale::whereDate('created_at',today())->sum('total'),
         'productscount' => Product::count(),
         'lowstock' => Product::where('quantity','<',5)->get(),
         'categorycount' => Category::count(),
-        'usercount' => User::count()
+        'usercount' => User::count(),
 
+       
     ]);
 
     }

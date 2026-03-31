@@ -1,64 +1,49 @@
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
-
-
-
-     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+   
 
     @extends('layouts.app')
 
     @section('content')
     
-        <div class="flex justify-between items-center  bg-white p-4">
+        <div class="flex justify-between items-center  bg-white p-4 mt-12 rounded-xl">
             
-        <button id="togglebtn" class="xl:hidden p-2 text-3xl font-bold ">☰</button>
-        <h2 class=" text-base 1g:text-4xl xl:text-6xl p-2 xl:p-5 font-serif">Admin dashboard</h2>
-        <form action="{{route('logout')}}" method="POST">
-            @csrf
-        <button type="submit" class="text-base xl:text-3xl text-white bg-red-700 rounded-2xl mt-2 xl:mt-4 p-2 xl:p-4 hover:text-black hover:bg-red-400">Logout</button>
-        </form>
+        
+        <h2 class="text-4xl lg:text-6xl p-2 xl:p-5 font-serif">Admin dashboard</h2>
+       
         </div>
-    <div class="  grid grid-cols-2 xl:grid-cols-4 2xl:grid-cols-5 gap-2 xl:gap-10 mt-2 xl:mt-10 mx-2 xl:mx-10">
-        <div class="bg-white rounded-3xl shadow-md hover:shadow-xl transition duration-300">
-            <p class="text-center text-base xl:text-4xl mt-2 xl:mt-8 font-semibold">Total Revenue</p>
-            <p id="totalsales" class="text-center text-base xl:text-2xl mt-2 xl:mt-6 font-bold"> </p>
+    <div class=" grid grid-cols-2 xl:grid-cols-4 2xl:grid-cols-5 gap-2 xl:gap-6 mt-4 xl:mt-10 ">
+
+        <div class=" flex flex-col items-center bg-white rounded-xl shadow-md hover:shadow-xl transition duration-300 p-3 lg:p-5">
+            <p class=" text-2xl xl:text-4xl text-blue-400 font-thin">Total Revenue</p>
+            <p id="totalsales" class=" text-base lg:text-2xl mt-2 xl:mt-6 font-bold"> </p>
         </div>
-        <div class="bg-white rounded-3xl ">
-            <p class="text-yellow-600 text-center text-base xl:text-4xl mt-2 xl:mt-8 font-semibold">Total Sales</p>
+        <div class="flex flex-col items-center bg-white rounded-xl p-3 lg:p-5">
+            <p class="text-yellow-600 text-center text-2xl xl:text-4xl  font-thin">Total Sales</p>
             <p id="todaysales" class="text-center text-base xl:text-2xl mt-2 xl:mt-6 font-bold"></p>
         </div>
-        <div class="bg-white rounded-3xl ">
-            <p class="text-center text-base xl:text-4xl  mt-2 xl:mt-8 font-semibold ">Categories</p>
+        <div class=" flex flex-col items-center bg-white rounded-xl p-2 lg:p-5">
+            <p class="text-center text-base xl:text-4xl  font-thin ">Categories</p>
             <p id="categorycount" class="text-center text-base xl:text-2xl mt-2 xl:mt-6 font-bold"></p>
         </div>
         
-            <div class="bg-white rounded-3xl ">
-             <p class="text-center text-base xl:text-4xl  mt-2 xl:mt-8 font-semibold">Products</p>
+            <div class=" flex flex-col items-center bg-white rounded-xl p-3 lg:p-5 ">
+             <p class="text-center text-base xl:text-4xl  font-thin">Products</p>
             <p id="productscount" class="text-center text-base xl:text-2xl mt-2 xl:mt-6 font-bold"></p>
         </div>
-        <div  class="bg-white rounded-3xl ">
-             <p class="text-center text-base xl:text-4xl mt-2 xl:mt-8 font-semibold">Lowstock</p>
+        <div  class="flex flex-col items-center bg-white rounded-xl p-3 lg:p-5 ">
+             <p class="text-center text-base xl:text-4xl  font-thin">Lowstock</p>
              <div id="lowstock">
              @foreach($lowstock as $product)
             <p  class="text-center text-base xl:text-2xl mt-2 xl:mt-6 font-bold">{{$product->name}} {{$product->quantity}}</p>
             @endforeach
              </div>
         </div>
-        <div class="bg-white rounded-3xl ">
-             <p class="text-center text-base xl:text-4xl mt-2 xl:mt-8 font-semibold">Users</p>
+        <div class="flex flex-col items-center bg-white rounded-xl p-3 lg:p-5 ">
+             <p class="text-center text-base xl:text-4xl font-thin">Users</p>
             <p id="userscount" class="text-center text-base xl:text-2xl mt-2 xl:mt-6 font-bold"></p>
         </div>
-        <div class="bg-white rounded-3xl">
-            <p class="text-center text-base xl:text-4xl mt-2 xl:mt-8 font-semibold">Active Users</p>
+        <div class=" flex flex-col items-center bg-white rounded-xl p-3 lg:p-5">
+            <p class="text-center text-base xl:text-4xl  font-thin">Active Users</p>
                 <ul id="online-users">
                     
                 </ul>
@@ -66,25 +51,37 @@
 
        
     </div>
-    <h2 class="mx-2 xl:mx-10 mt-2 xl:mt-10 text-xl xl:text-5xl 2xl:text-6xl font-serif">Reports</h2>
-     <div class="grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 xl:gap-10 mt-2 xl:mt-10 mx-2 xl:mx-10">
-            <div class="bg-white">
-                <p>tt</p>
+    <div>
+    
+     <div class="flex flex-col-reverse lg:flex-row  gap-2 lg:gap-6 mt-2 xl:mt-10 ">
+            <div class="flex flex-col lg:w-3/4 mt-2 lg:mt-6">
+                <h2 class=" text-2xl lg:text-4xl font-semibold">Reports</h2>
+                <div class="bg-white mt-2">
+                <canvas id="myChart" ></canvas>
+                </div>
             </div>
-            <div class="bg-white ">
-                <p>tt</p>
-            </div>
-             
+            <div class="flex flex-col lg:w-1/4 mt-2 lg:mt-6">
+                 <h2 class="text-2xl lg:text-4xl font-semibold">Quick Actions</h2>
+                <div class=" flex flex-col gap-2  bg-white mt-2">
+                    <button class="bg-red-800 text-white text-2xl lg:text-3xl p-1 lg:p-2 font-semibold hover:bg-red-500"><a href="">Create Sale</a></button>
+                    <button class="bg-blue-900 text-white text-2xl lg:text-3xl p-1 lg:p-2 font-semibold hover:bg-blue-500"><a href="">Add Product</a></button>
+                    <button class="bg-yellow-500 text-white text-2xl lg:text-3xl p-1 lg:p-2 font-semibold hover:bg-yellow-200"><a href="">Add User</a></button>
+                 </div>
+             </div>
 
         </div>
        
-    
+    </div>
 
     
         
    
    @endsection
-<script type="module">
+
+   @section('script')
+    <script>
+
+     
     function loaddashboard(){
         
         fetch('api/dashboard',{
@@ -111,11 +108,17 @@
                 lowStockDiv.appendChild(p);
             });
         }
+          
+        
         })
+
+        
     
         .catch(error => {
             console.log('error loading dashboard',error);
         });
+
+        
     }
     loaddashboard();
 
@@ -150,6 +153,7 @@
             
     if (document.getElementById(`user-${user.id}`)) return;
             
+            const li = document.createElement('li');
             li.id =`user-${user.id}`;
             li.textContent = `${user.name} 🟢`;
             list.appendChild(li);
@@ -165,5 +169,5 @@
 
 
 </script>
-</body>
-</html>
+
+@endsection

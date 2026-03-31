@@ -10,6 +10,7 @@
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -18,29 +19,62 @@
 
     <div class="flex bg-gray-200  ">
  
-    <div id ="sidebar" class="  bg-blue-900 w-64 xl:w-96 2xl:w-96 h-screen py-2 xl:py-16 fixed  -translate-x-full xl:translate-x-0 transition-transform duration-300 ">
-        <h2 class=" text-center text-white text-base md:text-3xl xl:text-7xl 2xl:text-7xl font-sans">PayPoint</h2>
+    
+        <div>
+        <aside id ="sidebar" class=" p-4 lg:p-8 overflow-y-scroll bg-gray-100 w-80 h-screen z-30 inset-y-0 left-0 fixed lg:relative transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ">
+            <div class="flex flex-col mt-16">
+                <h2 class=" text-5xl lg:text-6xl font-serif">PayPoint</h2>
+                <p class="mt-2 text-base lg:text-xl text-blue-800">Pos Management System</p>
         
-        <aside>
-        <aside>
-            <nav >
-                <ul class=" text-center items-center text-white text-xl xl:text-5xl mt-2 xl:mt-48">
-                    <li class="block hover:text-blue-200">
-                        <a href="{{route('dashboard')}}"><i class="fa-solid fa-house text-base xl:text-4xl text-gray-300"></i> Dashboard</a> </li>
-                    <li class="block mt-2 xl:mt-6"><a href="{{route('products.create')}}"><i class="fa-solid fa-cart-shopping text-base xl:text-4xl text-gray-300"></i> Products</a> </li>
-                    <li class="block mt-2 xl:mt-6  hover:text-blue-200"><a href="{{route('categorys.create')}}"><i class="fa-solid fa-layer-group text-base xl:text-4xl text-gray-300"></i> Categories</a></li>
-                    <li class="block mt-2 xl:mt-6 hover:text-blue-200" ><a href="{{route('supplier.create')}}"><i class="fa-solid fa-truck-fast text-base xl:text-4xl text-gray-300"></i> Suppliers</a></li>
-                    <li class="block mt-2 xl:mt-6 hover:text-blue-200"><a href="{{route('users.create')}}"><i class="fa-solid fa-users text-base xl:text-4xl text-gray-300 "></i> Users</a></li>
-                    <li class="block mt-2 xl:mt-6 hover:text-blue-200"><a href="{{route('sale.pos')}}"><i class="fa-solid fa-dollar-sign text-base xl:text-4xl text-gray-300 font-thin"></i> Sales</a></li>
+            </div>
 
+            
+                <ul class=" flex flex-col gap-2 lg:gap-4 mt-8 lg:mt-24">
+                        <div class="flex space-x-2 lg:space-x-4 hover:bg-blue-800 hover:p-2 hover:lg:p-4 hover:rounded-2xl">
+                        <i class="fa-solid fa-house text-2xl lg:text-3xl text-gray-500 hover:text-white"> </i>
+                        <a href="{{route('dashboard')}}" class="text-2xl lg:text-4xl hover:text-white">Dashboard</a>
+                        </div>
+                        <div class="flex space-x-2 lg:space-x-4 hover:bg-blue-800 hover:p-2 hover:lg:p-4 hover:rounded-2xl">
+                        <i class="fa-solid fa-shopping-cart text-2xl lg:text-3xl text-gray-500 hover:text-white"> </i>
+                        <a href="{{route('products.create')}}" class="text-2xl lg:text-4xl hover:text-white">Products</a>
+                        </div>
+                        <div class="flex space-x-2 lg:space-x-4  hover:bg-blue-800 hover:p-2 hover:lg:p-4 hover:rounded-2xl">
+                        <i class="fa-solid fa-layer-group text-2xl lg:text-3xl text-gray-500 hover:text-white"> </i>
+                        <a href="{{route('categorys.create')}}" class="text-2xl lg:text-4xl hover:text-white">Category</a>
+                        </div>
+                        <div class="flex space-x-2 lg:space-x-4  hover:bg-blue-800 hover:p-2 hover:lg:p-4 hover:rounded-2xl">
+                        <i class="fa-solid fa-truck-fast text-2xl lg:text-3xl text-gray-500 hover:text-white"> </i>
+                        <a href="{{route('supplier.create')}}" class="text-2xl lg:text-4xl hover:text-white">Supplier</a>
+                        </div>
+                        <div class="flex space-x-2 lg:space-x-4  hover:bg-blue-800 hover:p-2 hover:lg:p-4 hover:rounded-2xl">
+                        <i class="fa-solid fa-users text-2xl lg:text-3xl text-gray-500 hover:text-white"> </i>
+                        <a href="{{route('users.create')}}" class="text-2xl lg:text-4xl hover:text-white">Users</a>
+                        </div>
+                        <div class="flex space-x-2 lg:space-x-4  hover:bg-blue-800 hover:p-2 hover:lg:p-4 hover:rounded-2xl">
+                        <i class="fa-solid fa-dollar-sign text-2xl lg:text-3xl text-gray-500 hover:text-white"> </i>
+                        <a href="{{route('sale.pos')}}" class="text-2xl lg:text-4xl hover:text-white">Sale</a>
+                        </div>
+                        
+                        
+                        <div class="flex justify-center fixed bottom-5 bg-red-700 rounded-xl  hover:bg-red-400 p-3 lg:p-5">
+                             <form action="{{route('logout')}}" method="POST">
+                              @csrf
+                            <button type="submit" class="text-2xl lg:text-4xl text-white ">Logout</button>
+                            </form>
+                        </div>
                 </ul>
-            </nav>
+            
         </aside>
+
+        <button id="btn" class=" lg:hidden absolute top-2 left-2 z-40"><i class="fa-solid fa-bars text-3xl"></i></button>
         </div>
     
 
-    <div class="flex-1 justify-center ml-0 xl:ml-96  h-screen bg-gray-100">
+
+    <div class="overflow-y-auto flex-1   h-screen bg-gray-200 px-4 lg:px-8">
         @yield('content')
+        
+        @yield('script')
     </div>
 
 </div>
@@ -48,48 +82,24 @@
 
 
         <!-- check anyones that login to broadcast it -->
-        @if(auth()->check())
+        
 <script>
-    // Add yourself immediately
-    const me = { id: {{ auth()->id() }}, name: "{{ auth()->user()->name }}" };
-    addUser(me);
-
-    window.Echo.join('system-online')
-        .here((users) => {
-            console.log('online-users', users);
-            updateOnlineUsers(users);
-        })
-        .joining((user) => {
-            console.log(user.name + ' logged in');
-            addUser(user);
-        })
-        .leaving((user) => {
-            console.log(user.name + ' went offline');
-            removeUser(user.id);
-        });
+    
 
        
 
 
      ///toggle
      const sidebar = document.getElementById('sidebar');
-     const togglebtn = document.getElementById('togglebtn');
+     const button = document.getElementById('btn');
 
-     let sidebarOpen = false;
-
-     togglebtn.addEventListener('click', () => {
-        sidebarOpen = !sidebarOpen;
-        if(sidebarOpen){
-            sidebar.classList.remove('-translate-x-full'); //hidden 
-            sidebar.classList.add('translate-x-0');       //visible
-        }
-        else{
-            sidebar.classList.remove('translate-x-0');// visible
-            sidebar.classList.add('-translate-x-full'); //hidden
-        }
+     button.addEventListener('click', () =>{
+        sidebar.classList.toggle('-translate-x-full')
      });
+
+     
 </script>
-@endif
+
 
     </body>
 </html>

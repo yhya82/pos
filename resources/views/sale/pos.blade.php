@@ -159,7 +159,7 @@
 }
 
 
-    //fetching items belonging sales
+    //fetching items belonging to sales
         async function loadSales(){
             
             try{

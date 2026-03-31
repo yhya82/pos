@@ -71,8 +71,9 @@ class SalesService
             throw new \Exception('cannot complete an empty sale');
         }
         
-          $sale->status = 'completed';
+          
          $sale->payment_method = $paymentMethod;
+         $sale->status = 'completed';
          $sale->save();
         
 

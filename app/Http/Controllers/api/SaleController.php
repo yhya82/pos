@@ -56,7 +56,7 @@ class SaleController extends Controller
              })->get();
          
 
-
+        //passing the sale id to the blade through the user(cause each sale bellongs to one user 0r a user can make nly one sale at a time)
         $sale = $this->saleService->getOrCreateSale(auth()->id());
 
             return response()->json([
@@ -128,6 +128,7 @@ class SaleController extends Controller
     }
 
     public function index(){
+        
         $user = auth()->user();
         if($user->role == 'admin'){
             $sales = Sale::with(['user','items.product'])->orderby('created_at','desc')->get();
