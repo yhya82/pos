@@ -14,33 +14,35 @@ Route::get('/', function () {
     return view('auth/login');
 });
 
-Route::get('/dashboard',[DashboardController::class,'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware('auth')->group(function () {
+//route for admin
+
+Route::middleware('auth','role:admin')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     
- Route::resource('products',ProductController::class);
-Route::resource('categorys',CategoryController::class);
-Route::resource('supplier',SupplierController::class);
-
-Route::get('sale/pos',[SaleController::class,'pos'])->name('sale.pos');
-Route::get('sale/index',[SaleController::class,'index'])->name('sale.index');
-Route::post('sales/additem',[SaleController::class,'addItem'])->name('sales.additem');
-Route::post('sales/completesale',[SaleController::class, 'completeSale'])->name('sales.completesale');
-Route::delete('sales/removeitem/{saleItem}',[SaleController::class,'removeItem'])->name('sales.removeitem');
-Route::delete('sale/{sale}',[SaleController::class,'destroy'])->name('sale.destroy');
-//only admins return to the middleware after testing
- Route::get('sale/edit',[SaleController::class,'edit'])->name('sale.edit');
-    Route::post('sale/{sale}/edit',[SaleController::class,'update'])->name('sale.update');
-
-});
-
-Route::middleware(['auth','role:admin'])->group(function () {
+    Route::resource('products',ProductController::class);
+    Route::resource('categorys',CategoryController::class);
+    Route::resource('supplier',SupplierController::class);
     Route::resource('users',UserController::class);
-   
+    Route::get('/dashboard',[DashboardController::class,'index'])->name('dashboard'); 
+
+//only admins return to the middleware after testing
+    Route::get('sale/edit',[SaleController::class,'edit'])->name('sale.edit');
+    Route::post('sale/{sale}/edit',[SaleController::class,'update'])->name('sale.update');
 });
+
+//routes for cashier
+Route::middleware(['auth'])->group(function () {
+    Route::get('sale/pos',[SaleController::class,'pos'])->name('sale.pos');
+    Route::get('sale/index',[SaleController::class,'index'])->name('sale.index');
+    Route::post('sales/additem',[SaleController::class,'addItem'])->name('sales.additem');
+    Route::post('sales/completesale',[SaleController::class, 'completeSale'])->name('sales.completesale');
+    Route::delete('sales/removeitem/{saleItem}',[SaleController::class,'removeItem'])->name('sales.removeitem');
+    Route::delete('sale/{sale}',[SaleController::class,'destroy'])->name('sale.destroy');
+
+ });
 
 
 require __DIR__.'/auth.php';

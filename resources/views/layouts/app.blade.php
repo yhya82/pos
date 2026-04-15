@@ -30,6 +30,8 @@
 
             
                 <ul class=" flex flex-col gap-2 lg:gap-4 mt-8 lg:mt-24">
+                    <!-- ui permissions for admin -->
+                    @if(optional(auth()->user())->role =='admin')
                         <div class="flex space-x-2 lg:space-x-4 hover:bg-blue-800 hover:p-2 hover:lg:p-4 hover:rounded-2xl">
                         <i class="fa-solid fa-house text-2xl lg:text-3xl text-gray-500 hover:text-white"> </i>
                         <a href="{{route('dashboard')}}" class="text-2xl lg:text-4xl hover:text-white">Dashboard</a>
@@ -50,6 +52,7 @@
                         <i class="fa-solid fa-users text-2xl lg:text-3xl text-gray-500 hover:text-white"> </i>
                         <a href="{{route('users.create')}}" class="text-2xl lg:text-4xl hover:text-white">Users</a>
                         </div>
+                     @endif
                         <div class="flex space-x-2 lg:space-x-4  hover:bg-blue-800 hover:p-2 hover:lg:p-4 hover:rounded-2xl">
                         <i class="fa-solid fa-dollar-sign text-2xl lg:text-3xl text-gray-500 hover:text-white"> </i>
                         <a href="{{route('sale.pos')}}" class="text-2xl lg:text-4xl hover:text-white">Sale</a>

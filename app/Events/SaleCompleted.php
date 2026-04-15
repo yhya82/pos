@@ -20,7 +20,7 @@ class SaleCompleted implements ShouldBroadcast
     public $sale;
     public function __construct($sale)
     {
-        $his->sale = $sale;
+        $this->sale = $sale;
     }
 
     /**

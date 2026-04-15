@@ -6,6 +6,7 @@ use App\Models\Product;
 use App\Models\Category;
 use App\Models\SaleItem;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use App\Services\SalesService;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -28,7 +29,7 @@ class SaleController extends Controller
         ]);
         try{
                 $saleItem = $this->saleService->addItem(
-                auth()->id(),
+                Auth::id(),
                 $validated['product_id'],
                 $validated['quantity']
 
@@ -56,8 +57,8 @@ class SaleController extends Controller
              })->get();
          
 
-        //passing the sale id to the blade through the user(cause each sale bellongs to one user 0r a user can make nly one sale at a time)
-        $sale = $this->saleService->getOrCreateSale(auth()->id());
+        //passing the sale id to the blade through the user(cause each sale bellongs to one user 0r a user can make only one sale at a time)
+        $sale = $this->saleService->getOrCreateSale(Auth::id());
 
             return response()->json([
                 'products' => $products,
@@ -77,10 +78,12 @@ class SaleController extends Controller
         try{
             
             $sale = $this->saleService->completeSale(
-                auth()->id() ,
+                Auth::id() ,
                 $validated['payment_method']
             );
 
+            $sale->status = 'completed';
+            $sale->save();
             //fire the event here
             event(new SaleCompleted($sale));
 
@@ -129,7 +132,7 @@ class SaleController extends Controller
 
     public function index(){
         
-        $user = auth()->user();
+        $user = Auth::user();
         if($user->role == 'admin'){
             $sales = Sale::with(['user','items.product'])->orderby('created_at','desc')->get();
         }else{
